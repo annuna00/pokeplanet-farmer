@@ -24,7 +24,9 @@ pokeplanet.prototype.refreshStatus = function (screenshot) {
     
     this._inferGameScreenBounds();
     this._inferGameScreenComponents();
+
     this._inferIfGameIsOnFightScreen();
+    if (this.isOnFightScreen) this._inferFightInfo();
 }
 
 pokeplanet.prototype._isGameOnScreen = function (screenshot) {
@@ -55,19 +57,43 @@ pokeplanet.prototype._inferGameScreenBounds = function () {
 pokeplanet.prototype._inferGameScreenComponents = function () {
     if (!this.gameScreenBounds) throw new Exception('Cannot infer game screen components if game screen bounds are undefined');
 
-    this.fightButtonBounds = { x: this.gameScreenBounds.x + 410, y: this.gameScreenBounds.y + 842, width: 287, height: 90 };
+    this.fightButtonBounds = { x: this.gameScreenBounds.x + 410, y: this.gameScreenBounds.y + 842, width: 286, height: 90 };
+    this.fightEnemyBounds = { x: this.gameScreenBounds.x + 392, y: this.gameScreenBounds.y + 268, width: 338, height: 42 };
+    this.fightEnemyLvlBounds = { x: this.gameScreenBounds.x + 730, y: this.gameScreenBounds.y + 268, width: 102, height: 42 };
 }
 
 pokeplanet.prototype._inferIfGameIsOnFightScreen = function () {
     if (!this.gameScreenBounds) throw new Exception('Cannot infer if player is fighting if game screen bounds are undefined');
 
-    let regionFilePath = path.join(os.tmpdir(), '/pokeplanet_ocr_region.png');
-
-    this.screenshot.clone().crop(this.fightButtonBounds.x, this.fightButtonBounds.y, this.fightButtonBounds.width, this.fightButtonBounds.height).writeSync(regionFilePath);
-
-    let output = execSync(`${TESSERACT_CMD} ${regionFilePath} stdout --psm 13`, { stdio: 'pipe' }).toString();
+    let output = this.__ocr(this.__saveScreenshotRegion(this.fightButtonBounds));
 
     this.isOnFightScreen = output.indexOf('Fight') >= 0;
+}
+
+pokeplanet.prototype._inferFightInfo = function () {
+    if (!this.isOnFightScreen) throw new Exception('Cannot infer fight info if game is not on fight screen');
+
+    let enemyOutput = this.__ocr(this.__saveScreenshotRegion(this.fightEnemyBounds));
+    let enemyLvlOutput = this.__ocr(this.__saveScreenshotRegion(this.fightEnemyLvlBounds));
+    //let enemyWasCaptured = this.__subimage() !== false;
+
+    this.fightInfo = {
+        enemy: enemyOutput,
+        enemyLvl: enemyLvlOutput.substr(3),
+        enemyWasCaptured: false
+    };
+}
+
+pokeplanet.prototype.__saveScreenshotRegion = function (bounds) {
+    let regionFilePath = path.join(os.tmpdir(), '/pokeplanet_ocr_region.png');
+
+    this.screenshot.clone().crop(bounds.x, bounds.y, bounds.width, bounds.height).writeSync(regionFilePath);
+
+    return regionFilePath;
+}
+
+pokeplanet.prototype.__ocr = function (filePath) {
+    return execSync(`${TESSERACT_CMD} ${filePath} stdout --psm 13`, { stdio: 'pipe' }).toString().trim();
 }
 
 module.exports = new pokeplanet();

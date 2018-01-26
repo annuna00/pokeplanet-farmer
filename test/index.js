@@ -9,26 +9,36 @@ describe('pokeplanet', function() {
 
     this.timeout(10000);
 
-    it('should return true when game is on the screen', function() {
+    xit('should return true when game is on the screen', function() {
         let screenshot = Jimp.readSync(__dirname + '/resources/screenshot2.png');
         let res = pokeplanet._isGameOnScreen(screenshot);
         assert.equal(res, true);
     });
 
-    it('should return false when game is not on the screen', function() {
+    xit('should return false when game is not on the screen', function() {
         let screenshot = Jimp.readSync(__dirname + '/resources/screenshot1.png');
         let res = pokeplanet._isGameOnScreen(screenshot);
         assert.equal(res, false);
     });
 
-    it('should return true when player is fighting', function() {
+    xit('should return true when player is fighting', function() {
         pokeplanet.refreshStatus(Jimp.readSync(__dirname + '/resources/screenshot3.png'));
         assert.equal(pokeplanet.isOnFightScreen, true);
     });
 
-    it('should return false when player is not fighting', function() {
+    xit('should return false when player is not fighting', function() {
         pokeplanet.refreshStatus(Jimp.readSync(__dirname + '/resources/screenshot2.png'));
         assert.equal(pokeplanet.isOnFightScreen, false);
+    });
+
+    it('should return Spearow when asked for player\'s enemy', function() {
+        pokeplanet.refreshStatus(Jimp.readSync(__dirname + '/resources/screenshot3.png'));
+        assert.equal(pokeplanet.fightInfo.enemy, 'Spearow');
+    });
+
+    it('should return 21 when asked for player enemy\'s level', function() {
+        pokeplanet.refreshStatus(Jimp.readSync(__dirname + '/resources/screenshot3.png'));
+        assert.equal(pokeplanet.fightInfo.enemyLvl, '21');
     });
 
 });
