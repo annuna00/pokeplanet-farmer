@@ -11,13 +11,13 @@ Jimp.prototype.writeSync = deasync(Jimp.prototype.write);
 const SUBIMAGE_CMD = path.join(__dirname, '/lib/subimage');
 const TESSERACT_CMD = 'tesseract';
 
-function pokefarmer() {
+function pokeplanet() {
 }
 
-pokefarmer.prototype.gameOnScreen = false;
-pokefarmer.prototype.isPlayerFighting = false;
+pokeplanet.prototype.gameOnScreen = false;
+pokeplanet.prototype.isPlayerFighting = false;
 
-pokefarmer.prototype.refreshStatus = function (screenshot) {
+pokeplanet.prototype.refreshStatus = function (screenshot) {
     if (!this._isGameOnScreen(screenshot)) return;
 
     this.screenshot = screenshot;
@@ -27,9 +27,9 @@ pokefarmer.prototype.refreshStatus = function (screenshot) {
     this._inferIfPlayerIsFighting();
 }
 
-pokefarmer.prototype._isGameOnScreen = function (screenshot) {
-    let pokeplanetFilePath = path.join(__dirname, '/resources/pokeplanet.png');
-    let screenshotFilePath = path.join(os.tmpdir(), '/pokefarmer_screenshot.png'); // crypto.createHash('md5').update(Math.random().toString()).digest('hex')
+pokeplanet.prototype._isGameOnScreen = function (screenshot) {
+    let pokeplanetFilePath = path.join(__dirname, '/resources/icon.png');
+    let screenshotFilePath = path.join(os.tmpdir(), '/pokeplanet_screenshot.png'); // crypto.createHash('md5').update(Math.random().toString()).digest('hex')
 
     screenshot.writeSync(screenshotFilePath);
 
@@ -46,22 +46,22 @@ pokefarmer.prototype._isGameOnScreen = function (screenshot) {
     return this.gameOnScreen;
 }
 
-pokefarmer.prototype._inferGameScreenBounds = function () {
+pokeplanet.prototype._inferGameScreenBounds = function () {
     if (!this.gameIconLoc) throw new Exception('Cannot infer game screen bounds if game icon location is undefined');
 
     this.gameScreenBounds = { x: this.gameIconLoc[0] - 76, y: this.gameIconLoc[1] - 1208, width: 2048, height: 1280 };
 }
 
-pokefarmer.prototype._inferGameScreenComponents = function () {
+pokeplanet.prototype._inferGameScreenComponents = function () {
     if (!this.gameScreenBounds) throw new Exception('Cannot infer game screen components if game screen bounds are undefined');
 
     this.fightButtonBounds = { x: this.gameScreenBounds.x + 410, y: this.gameScreenBounds.y + 842, width: 287, height: 90 };
 }
 
-pokefarmer.prototype._inferIfPlayerIsFighting = function () {
+pokeplanet.prototype._inferIfPlayerIsFighting = function () {
     if (!this.gameScreenBounds) throw new Exception('Cannot infer if player is fighting if game screen bounds are undefined');
 
-    let regionFilePath = path.join(os.tmpdir(), '/pokefarmer_ocr_region.png');
+    let regionFilePath = path.join(os.tmpdir(), '/pokeplanet_ocr_region.png');
 
     this.screenshot.clone().crop(this.fightButtonBounds.x, this.fightButtonBounds.y, this.fightButtonBounds.width, this.fightButtonBounds.height).writeSync(regionFilePath);
 
@@ -70,4 +70,4 @@ pokefarmer.prototype._inferIfPlayerIsFighting = function () {
     this.isPlayerFighting = output.indexOf('Fight') >= 0;
 }
 
-module.exports = new pokefarmer();
+module.exports = new pokeplanet();

@@ -1,4 +1,4 @@
-const pokefarmer = require('./pokefarmer');
+const pokeplanet = require('./pokeplanet');
 const robot = require('robotjs');
 const sleep = require('sleep');
 const Jimp = require('jimp');
@@ -12,6 +12,7 @@ while (1) {
     let capture = robot.screen.capture();
     let i = 0;
     let screenshot = new Jimp(capture.width, capture.height);
+    let screenshotScale = capture.width / robot.getScreenSize().width;
     
     screenshot.scan(0, 0, screenshot.bitmap.width, screenshot.bitmap.height, (x, y, idx) => {
         screenshot.bitmap.data[idx + 2] = capture.image.readUInt8(i++);
@@ -20,9 +21,9 @@ while (1) {
         screenshot.bitmap.data[idx + 3] = capture.image.readUInt8(i++);
     });
     
-    pokefarmer.refreshStatus(screenshot);
+    pokeplanet.refreshStatus(screenshot);
 
-    if (!pokefarmer.gameOnScreen) {
+    if (!pokeplanet.gameOnScreen) {
         console.log('no game on screen');
         
         robot.keyToggle('a', 'up');
@@ -31,7 +32,7 @@ while (1) {
         robot.keyToggle('w', 'up');
     }
     else {
-        if (!pokefarmer.isPlayerFighting) {
+        if (!pokeplanet.isPlayerFighting) {
             if (changeMovementDirection) {
                 changeMovementDirection = false;
                 if (direction == 'left') {
@@ -60,8 +61,8 @@ while (1) {
             robot.keyToggle('d', 'up');
             robot.keyToggle('w', 'up');
 
-            let x = pokefarmer.fightButtonBounds.x / 2 + Math.floor(Math.random() * pokefarmer.fightButtonBounds.width / 2);
-            let y = pokefarmer.fightButtonBounds.y / 2 + Math.floor(Math.random() * pokefarmer.fightButtonBounds.height / 2);
+            let x = pokeplanet.fightButtonBounds.x / screenshotScale + Math.floor(Math.random() * pokeplanet.fightButtonBounds.width / screenshotScale);
+            let y = pokeplanet.fightButtonBounds.y / screenshotScale + Math.floor(Math.random() * pokeplanet.fightButtonBounds.height / screenshotScale);
             
             robot.moveMouseSmooth(x, y);
             robot.mouseClick('left', false);
