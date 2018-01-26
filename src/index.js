@@ -32,7 +32,7 @@ while (1) {
         robot.keyToggle('w', 'up');
     }
     else {
-        if (!pokeplanet.isPlayerFighting) {
+        if (!pokeplanet.isOnFightScreen) {
             if (changeMovementDirection) {
                 changeMovementDirection = false;
                 if (direction == 'left') {

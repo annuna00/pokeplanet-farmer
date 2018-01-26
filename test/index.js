@@ -23,12 +23,12 @@ describe('pokeplanet', function() {
 
     it('should return true when player is fighting', function() {
         pokeplanet.refreshStatus(Jimp.readSync(__dirname + '/resources/screenshot3.png'));
-        assert.equal(pokeplanet.isPlayerFighting, true);
+        assert.equal(pokeplanet.isOnFightScreen, true);
     });
 
     it('should return false when player is not fighting', function() {
         pokeplanet.refreshStatus(Jimp.readSync(__dirname + '/resources/screenshot2.png'));
-        assert.equal(pokeplanet.isPlayerFighting, false);
+        assert.equal(pokeplanet.isOnFightScreen, false);
     });
 
 });

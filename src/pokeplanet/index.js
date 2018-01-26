@@ -15,7 +15,7 @@ function pokeplanet() {
 }
 
 pokeplanet.prototype.gameOnScreen = false;
-pokeplanet.prototype.isPlayerFighting = false;
+pokeplanet.prototype.isOnFightScreen = false;
 
 pokeplanet.prototype.refreshStatus = function (screenshot) {
     if (!this._isGameOnScreen(screenshot)) return;
@@ -67,7 +67,7 @@ pokeplanet.prototype._inferIfPlayerIsFighting = function () {
 
     let output = execSync(`${TESSERACT_CMD} ${regionFilePath} stdout --psm 13`, { stdio: 'pipe' }).toString();
 
-    this.isPlayerFighting = output.indexOf('Fight') >= 0;
+    this.isOnFightScreen = output.indexOf('Fight') >= 0;
 }
 
 module.exports = new pokeplanet();
