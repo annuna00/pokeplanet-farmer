@@ -14,12 +14,16 @@ const TESSERACT_CMD = 'tesseract';
 function pokefarmer() {
 }
 
+pokefarmer.prototype.gameOnScreen = false;
+pokefarmer.prototype.isPlayerFighting = false;
+
 pokefarmer.prototype.refreshStatus = function (screenshot) {
     if (!this._isGameOnScreen(screenshot)) return;
 
     this.screenshot = screenshot;
     
     this._inferGameScreenBounds();
+    this._inferGameScreenComponents();
     this._inferIfPlayerIsFighting();
 }
 
@@ -29,15 +33,17 @@ pokefarmer.prototype._isGameOnScreen = function (screenshot) {
 
     screenshot.writeSync(screenshotFilePath);
 
-    let output = execSync(`${SUBIMAGE_CMD} ${screenshotFilePath} ${pokeplanetFilePath} 0.7`).toString();
+    let output = execSync(`${SUBIMAGE_CMD} ${screenshotFilePath} ${pokeplanetFilePath} 0.5`).toString();
 
     try {
         this.gameIconLoc = JSON.parse(output.trim());
-        return true;
+        this.gameOnScreen = true;
     }
     catch (ex) {
-        return false;
+        this.gameOnScreen = false;
     }
+
+    return this.gameOnScreen;
 }
 
 pokefarmer.prototype._inferGameScreenBounds = function () {
@@ -46,12 +52,18 @@ pokefarmer.prototype._inferGameScreenBounds = function () {
     this.gameScreenBounds = { x: this.gameIconLoc[0] - 76, y: this.gameIconLoc[1] - 1208, width: 2048, height: 1280 };
 }
 
+pokefarmer.prototype._inferGameScreenComponents = function () {
+    if (!this.gameScreenBounds) throw new Exception('Cannot infer game screen components if game screen bounds are undefined');
+
+    this.fightButtonBounds = { x: this.gameScreenBounds.x + 410, y: this.gameScreenBounds.y + 842, width: 287, height: 90 };
+}
+
 pokefarmer.prototype._inferIfPlayerIsFighting = function () {
     if (!this.gameScreenBounds) throw new Exception('Cannot infer if player is fighting if game screen bounds are undefined');
 
     let regionFilePath = path.join(os.tmpdir(), '/pokefarmer_ocr_region.png');
 
-    this.screenshot.clone().crop(this.gameScreenBounds.x + 410, this.gameScreenBounds.y + 842, 287, 90).writeSync(regionFilePath);
+    this.screenshot.clone().crop(this.fightButtonBounds.x, this.fightButtonBounds.y, this.fightButtonBounds.width, this.fightButtonBounds.height).writeSync(regionFilePath);
 
     let output = execSync(`${TESSERACT_CMD} ${regionFilePath} stdout --psm 13`, { stdio: 'pipe' }).toString();
 
