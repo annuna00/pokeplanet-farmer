@@ -20,8 +20,6 @@ pokeplanet.prototype.isOnFightScreen = false;
 pokeplanet.prototype.refreshStatus = function (screenshot) {
     if (!this._isGameOnScreen(screenshot)) return;
 
-    this.screenshot = screenshot;
-    
     this._inferGameScreenBounds();
     this._inferGameScreenComponents();
 
@@ -30,20 +28,13 @@ pokeplanet.prototype.refreshStatus = function (screenshot) {
 }
 
 pokeplanet.prototype._isGameOnScreen = function (screenshot) {
-    let pokeplanetFilePath = path.join(__dirname, '/resources/icon.png');
-    let screenshotFilePath = path.join(os.tmpdir(), '/pokeplanet_screenshot.png'); // crypto.createHash('md5').update(Math.random().toString()).digest('hex')
+    this.screenshot = screenshot;
+    this.screenshotFilePath = path.join(os.tmpdir(), '/pokeplanet_screenshot.png'); // crypto.createHash('md5').update(Math.random().toString()).digest('hex')
+    
+    this.screenshot.writeSync(this.screenshotFilePath);
 
-    screenshot.writeSync(screenshotFilePath);
-
-    let output = execSync(`${SUBIMAGE_CMD} ${screenshotFilePath} ${pokeplanetFilePath} 0.5`).toString();
-
-    try {
-        this.gameIconLoc = JSON.parse(output.trim());
-        this.gameOnScreen = true;
-    }
-    catch (ex) {
-        this.gameOnScreen = false;
-    }
+    this.gameIconLoc = this.__subimageLocationOnScreenshot(path.join(__dirname, '/resources/icon.png'), 0.5);
+    this.gameOnScreen = this.gameIconLoc !== false;
 
     return this.gameOnScreen;
 }
@@ -75,12 +66,12 @@ pokeplanet.prototype._inferFightInfo = function () {
 
     let enemyOutput = this.__ocr(this.__saveScreenshotRegion(this.fightEnemyBounds));
     let enemyLvlOutput = this.__ocr(this.__saveScreenshotRegion(this.fightEnemyLvlBounds));
-    //let enemyWasCaptured = this.__subimage() !== false;
+    let enemyWasCaptured = this.__subimageLocationOnScreenshot(path.join(__dirname, 'resources/pokeball.png')) !== false;
 
     this.fightInfo = {
         enemy: enemyOutput,
         enemyLvl: enemyLvlOutput.substr(3),
-        enemyWasCaptured: false
+        enemyWasCaptured: enemyWasCaptured
     };
 }
 
@@ -90,6 +81,17 @@ pokeplanet.prototype.__saveScreenshotRegion = function (bounds) {
     this.screenshot.clone().crop(bounds.x, bounds.y, bounds.width, bounds.height).writeSync(regionFilePath);
 
     return regionFilePath;
+}
+
+pokeplanet.prototype.__subimageLocationOnScreenshot = function (imageFilePath, threshold) {
+    let output = execSync(`${SUBIMAGE_CMD} ${this.screenshotFilePath} ${imageFilePath} ${threshold || 0.8}`).toString().trim();
+
+    try {
+        return JSON.parse(output);
+    }
+    catch (ex) {
+        return false;
+    }
 }
 
 pokeplanet.prototype.__ocr = function (filePath) {

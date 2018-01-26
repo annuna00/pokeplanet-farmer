@@ -31,14 +31,24 @@ describe('pokeplanet', function() {
         assert.equal(pokeplanet.isOnFightScreen, false);
     });
 
-    it('should return Spearow when asked for player\'s enemy', function() {
+    xit('should return Spearow when asked for player\'s enemy', function() {
         pokeplanet.refreshStatus(Jimp.readSync(__dirname + '/resources/screenshot3.png'));
         assert.equal(pokeplanet.fightInfo.enemy, 'Spearow');
     });
 
-    it('should return 21 when asked for player enemy\'s level', function() {
+    xit('should return 21 when asked for player enemy\'s level', function() {
         pokeplanet.refreshStatus(Jimp.readSync(__dirname + '/resources/screenshot3.png'));
         assert.equal(pokeplanet.fightInfo.enemyLvl, '21');
+    });
+
+    it('should return true when player\'s enemy was captured', function() {
+        pokeplanet.refreshStatus(Jimp.readSync(__dirname + '/resources/screenshot3.png'));
+        assert.equal(pokeplanet.fightInfo.enemyWasCaptured, true);
+    });
+
+    it('should return false when player\'s enemy wasn\'t captured', function() {
+        pokeplanet.refreshStatus(Jimp.readSync(__dirname + '/resources/screenshot4.png'));
+        assert.equal(pokeplanet.fightInfo.enemyWasCaptured, false);
     });
 
 });
