@@ -24,7 +24,7 @@ pokeplanet.prototype.refreshStatus = function (screenshot) {
     
     this._inferGameScreenBounds();
     this._inferGameScreenComponents();
-    this._inferIfPlayerIsFighting();
+    this._inferIfGameIsOnFightScreen();
 }
 
 pokeplanet.prototype._isGameOnScreen = function (screenshot) {
@@ -58,7 +58,7 @@ pokeplanet.prototype._inferGameScreenComponents = function () {
     this.fightButtonBounds = { x: this.gameScreenBounds.x + 410, y: this.gameScreenBounds.y + 842, width: 287, height: 90 };
 }
 
-pokeplanet.prototype._inferIfPlayerIsFighting = function () {
+pokeplanet.prototype._inferIfGameIsOnFightScreen = function () {
     if (!this.gameScreenBounds) throw new Exception('Cannot infer if player is fighting if game screen bounds are undefined');
 
     let regionFilePath = path.join(os.tmpdir(), '/pokeplanet_ocr_region.png');
