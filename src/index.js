@@ -74,8 +74,8 @@ while (1) {
             else {
                 console.log('let\'s kill this pokemon');
                 
-                let x = pokeplanet.fightButtonBounds.x / screenshotScale + Math.floor(Math.random() * pokeplanet.fightButtonBounds.width / screenshotScale);
-                let y = pokeplanet.fightButtonBounds.y / screenshotScale + Math.floor(Math.random() * pokeplanet.fightButtonBounds.height / screenshotScale);
+                let x = pokeplanet.fightButtonBounds.x / screenshotScale + Math.floor(Math.random() * (pokeplanet.fightButtonBounds.width - 16) / screenshotScale);
+                let y = pokeplanet.fightButtonBounds.y / screenshotScale + Math.floor(Math.random() * (pokeplanet.fightButtonBounds.height - 16) / screenshotScale);
                 
                 robot.moveMouseSmooth(x, y);
                 robot.mouseClick('left', false);
