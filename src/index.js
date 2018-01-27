@@ -7,6 +7,23 @@ let changeMovementDirection = true;
 let direction = 'right';
 let loop = 0;
 
+let pokeballs = ['PokeBall', 'GreatBall', 'UltraBall'];
+let pokemonsToCatch = [
+    'Parasect',
+    'Exeggcute',
+    'Chansey',
+    'Tauros',
+    'Doduo',
+    'Rhyhorn',
+    'Scyther',
+    'Pinsir',
+    'Kangaskhan',
+    'Dratini',
+    'Dragonair',
+    'Psyduck',
+    'Slowpoke'
+];
+
 while (1) {
 
     let capture = robot.screen.capture();
@@ -32,7 +49,65 @@ while (1) {
         robot.keyToggle('w', 'up');
     }
     else {
-        if (!pokeplanet.isOnFightScreen) {
+        if (pokeplanet.isOnFightScreen) {
+            console.log('player fighting');
+            console.log('enemy: ' + pokeplanet.fightInfo.enemy + ' (lv. ' + pokeplanet.fightInfo.enemyLvl + ')');
+
+            robot.keyToggle('a', 'up');
+            robot.keyToggle('s', 'up');
+            robot.keyToggle('d', 'up');
+            robot.keyToggle('w', 'up');
+
+            if (!pokeplanet.enemyWasCaptured || pokemonsToCatch.indexOf(pokeplanet.enemy) >= 0) {
+                console.log('let\'s try to capture this pokemon... we need to open the bag :P');
+                
+                let x = pokeplanet.bagButtonBounds.x / screenshotScale + Math.floor(Math.random() * pokeplanet.bagButtonBounds.width / screenshotScale);
+                let y = pokeplanet.bagButtonBounds.y / screenshotScale + Math.floor(Math.random() * pokeplanet.bagButtonBounds.height / screenshotScale);
+                
+                robot.moveMouseSmooth(x, y);
+                robot.mouseClick('left', false);
+            }
+            else {
+                console.log('let\'s kill this pokemon');
+                
+                let x = pokeplanet.fightButtonBounds.x / screenshotScale + Math.floor(Math.random() * pokeplanet.fightButtonBounds.width / screenshotScale);
+                let y = pokeplanet.fightButtonBounds.y / screenshotScale + Math.floor(Math.random() * pokeplanet.fightButtonBounds.height / screenshotScale);
+                
+                robot.moveMouseSmooth(x, y);
+                robot.mouseClick('left', false);
+
+                sleep.msleep(1500);
+
+                robot.mouseClick('left', false);
+
+                robot.moveMouseSmooth(x - 300, y - 300);
+            }
+        }
+        else if (pokeplanet.isOnBagScreen) {
+            if (pokeballs.indexOf(pokeplanet.bagInfo.selectedItem) >= 0) {
+                console.log('try to capture using a ' + pokeplanet.bagInfo.selectedItem);
+                
+                let x = pokeplanet.useItemButtonBounds.x / screenshotScale + Math.floor(Math.random() * pokeplanet.useItemButtonBounds.width / screenshotScale);
+                let y = pokeplanet.useItemButtonBounds.y / screenshotScale + Math.floor(Math.random() * pokeplanet.useItemButtonBounds.height / screenshotScale);
+                
+                robot.moveMouseSmooth(x, y);
+                robot.mouseClick('left', false);
+
+                sleep.msleep(500);
+            }
+            else {
+                console.log('selected item is not a pokeball, let\'s see the next one');
+                
+                let x = pokeplanet.bagNextItemButtonBounds.x / screenshotScale + Math.floor(Math.random() * pokeplanet.bagNextItemButtonBounds.width / screenshotScale);
+                let y = pokeplanet.bagNextItemButtonBounds.y / screenshotScale + Math.floor(Math.random() * pokeplanet.bagNextItemButtonBounds.height / screenshotScale);
+                
+                robot.moveMouseSmooth(x, y);
+                robot.mouseClick('left', false);
+
+                sleep.msleep(500);
+            }
+        }
+        else {
             if (changeMovementDirection) {
                 changeMovementDirection = false;
                 if (direction == 'left') {
@@ -52,24 +127,6 @@ while (1) {
             if (loop % 2 == 0) {
                 changeMovementDirection = true;
             }
-        }
-        else {
-            console.log('player fighting');
-
-            robot.keyToggle('a', 'up');
-            robot.keyToggle('s', 'up');
-            robot.keyToggle('d', 'up');
-            robot.keyToggle('w', 'up');
-
-            let x = pokeplanet.fightButtonBounds.x / screenshotScale + Math.floor(Math.random() * pokeplanet.fightButtonBounds.width / screenshotScale);
-            let y = pokeplanet.fightButtonBounds.y / screenshotScale + Math.floor(Math.random() * pokeplanet.fightButtonBounds.height / screenshotScale);
-            
-            robot.moveMouseSmooth(x, y);
-            robot.mouseClick('left', false);
-
-            sleep.msleep(1500);
-
-            robot.mouseClick('left', false);
         }
     }
 

@@ -54,9 +54,10 @@ pokeplanet.prototype._inferGameScreenComponents = function () {
     if (!this.gameScreenBounds) throw new Exception('Cannot infer game screen components if game screen bounds are undefined');
 
     this.bagButtonBounds = { x: this.gameScreenBounds.x + 705, y: this.gameScreenBounds.y + 842, width: 286, height: 90 };
+    this.bagNextItemButtonBounds = { x: this.gameScreenBounds.x + 585, y: this.gameScreenBounds.y + 842, width: 54, height: 115 };
     this.fightButtonBounds = { x: this.gameScreenBounds.x + 410, y: this.gameScreenBounds.y + 842, width: 286, height: 90 };
     this.useItemButtonBounds = { x: this.gameScreenBounds.x + 412, y: this.gameScreenBounds.y + 968, width: 227, height: 60 };
-    
+
     this.bagSelectedItemBounds = { x: this.gameScreenBounds.x + 660, y: this.gameScreenBounds.y + 842, width: 990, height: 60 };
 
     this.fightEnemyBounds = { x: this.gameScreenBounds.x + 392, y: this.gameScreenBounds.y + 268, width: 338, height: 42 };
