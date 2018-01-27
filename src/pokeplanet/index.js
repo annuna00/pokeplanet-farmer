@@ -100,6 +100,7 @@ pokeplanet.prototype._inferFightInfo = function () {
 
     this.fightInfo = {
         enemy: enemyOutput.replace('[S]', ''),
+        enemyIsShiny: enemyOutput.indexOf('[S]') >= 0,
         enemyLvl: enemyLvlOutput.substr(3),
         enemyWasCaptured: enemyWasCaptured
     };

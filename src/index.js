@@ -62,7 +62,7 @@ while (1) {
             robot.keyToggle('d', 'up');
             robot.keyToggle('w', 'up');
 
-            if (!pokeplanet.fightInfo.enemyWasCaptured || pokemonsToCatch.indexOf(pokeplanet.fightInfo.enemy) >= 0) {
+            if (!pokeplanet.fightInfo.enemyWasCaptured || pokeplanet.fightInfo.enemyIsShiny || pokemonsToCatch.indexOf(pokeplanet.fightInfo.enemy) >= 0) {
                 console.log('let\'s try to capture this pokemon... we need to open the bag :P');
                 
                 let x = pokeplanet.bagButtonBounds.x / screenshotScale + Math.floor(Math.random() * pokeplanet.bagButtonBounds.width / screenshotScale);
