@@ -53,12 +53,16 @@ while (1) {
             console.log('player fighting');
             console.log('enemy: ' + pokeplanet.fightInfo.enemy + ' (lv. ' + pokeplanet.fightInfo.enemyLvl + ')');
 
+            if (!pokeplanet.fightInfo.enemyWasCaptured) {
+                console.log('enemy not captured yet!');
+            }
+
             robot.keyToggle('a', 'up');
             robot.keyToggle('s', 'up');
             robot.keyToggle('d', 'up');
             robot.keyToggle('w', 'up');
 
-            if (!pokeplanet.enemyWasCaptured || pokemonsToCatch.indexOf(pokeplanet.enemy) >= 0) {
+            if (!pokeplanet.fightInfo.enemyWasCaptured || pokemonsToCatch.indexOf(pokeplanet.fightInfo.enemy) >= 0) {
                 console.log('let\'s try to capture this pokemon... we need to open the bag :P');
                 
                 let x = pokeplanet.bagButtonBounds.x / screenshotScale + Math.floor(Math.random() * pokeplanet.bagButtonBounds.width / screenshotScale);
