@@ -26,6 +26,7 @@ pokeplanet.prototype.refreshStatus = function (screenshot) {
     this._inferGameScreenComponents();
 
     this._inferIfGameIsOnBagScreen();
+    if (this.isOnBagScreen) this._inferBagInfo();
 
     this._inferIfGameIsOnFightScreen();
     if (this.isOnFightScreen) this._inferFightInfo();
@@ -52,20 +53,14 @@ pokeplanet.prototype._inferGameScreenBounds = function () {
 pokeplanet.prototype._inferGameScreenComponents = function () {
     if (!this.gameScreenBounds) throw new Exception('Cannot infer game screen components if game screen bounds are undefined');
 
-    this.fightEnemyBounds = { x: this.gameScreenBounds.x + 392, y: this.gameScreenBounds.y + 268, width: 338, height: 42 };
-    this.fightEnemyLvlBounds = { x: this.gameScreenBounds.x + 730, y: this.gameScreenBounds.y + 268, width: 102, height: 42 };
-
     this.bagButtonBounds = { x: this.gameScreenBounds.x + 705, y: this.gameScreenBounds.y + 842, width: 286, height: 90 };
     this.fightButtonBounds = { x: this.gameScreenBounds.x + 410, y: this.gameScreenBounds.y + 842, width: 286, height: 90 };
     this.useItemButtonBounds = { x: this.gameScreenBounds.x + 412, y: this.gameScreenBounds.y + 968, width: 227, height: 60 };
-}
+    
+    this.bagSelectedItemBounds = { x: this.gameScreenBounds.x + 660, y: this.gameScreenBounds.y + 842, width: 990, height: 60 };
 
-pokeplanet.prototype._inferIfGameIsOnFightScreen = function () {
-    if (!this.gameScreenBounds) throw new Exception('Cannot infer if game is on fight screen if game screen bounds are undefined');
-
-    let output = this.__ocr(this.__saveScreenshotRegion(this.fightButtonBounds));
-
-    this.isOnFightScreen = output.indexOf('Fight') >= 0;
+    this.fightEnemyBounds = { x: this.gameScreenBounds.x + 392, y: this.gameScreenBounds.y + 268, width: 338, height: 42 };
+    this.fightEnemyLvlBounds = { x: this.gameScreenBounds.x + 730, y: this.gameScreenBounds.y + 268, width: 102, height: 42 };
 }
 
 pokeplanet.prototype._inferIfGameIsOnBagScreen = function () {
@@ -74,6 +69,25 @@ pokeplanet.prototype._inferIfGameIsOnBagScreen = function () {
     this.useItemButtonLocation = this.__subimageLocationOnImage(this.__saveScreenshotRegion(this.useItemButtonBounds), path.join(__dirname, '/resources/useItemButton.png'), 0.4);
     
     this.isOnBagScreen = this.useItemButtonLocation !== false;
+}
+
+pokeplanet.prototype._inferBagInfo = function () {
+    if (!this.isOnBagScreen) throw new Exception('Cannot infer bag info if game is not on bag screen');
+
+    let selectedItemOutput = this.__ocr(this.__saveScreenshotRegion(this.bagSelectedItemBounds));
+
+    this.bagInfo = {
+        selectedItem: selectedItemOutput.replace('(untradeable)', ''),
+        selectedItemQuantity: 1
+    };
+}
+
+pokeplanet.prototype._inferIfGameIsOnFightScreen = function () {
+    if (!this.gameScreenBounds) throw new Exception('Cannot infer if game is on fight screen if game screen bounds are undefined');
+
+    let output = this.__ocr(this.__saveScreenshotRegion(this.fightButtonBounds));
+
+    this.isOnFightScreen = output.indexOf('Fight') >= 0;
 }
 
 pokeplanet.prototype._inferFightInfo = function () {
@@ -114,7 +128,7 @@ pokeplanet.prototype.__subimageLocationOnScreenshot = function (imageFilePath, t
 }
 
 pokeplanet.prototype.__ocr = function (filePath, psm) {
-    return execSync(`${TESSERACT_CMD} ${filePath} stdout --psm ${psm || 13}`, { stdio: 'pipe' }).toString().trim();
+    return execSync(`${TESSERACT_CMD} ${filePath} stdout --psm ${psm || 13}`, { stdio: 'pipe' }).toString().trim().replace(new RegExp(' ', 'g'), '');
 }
 
 module.exports = new pokeplanet();
