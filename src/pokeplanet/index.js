@@ -30,6 +30,8 @@ pokeplanet.prototype.refreshStatus = function (screenshot) {
 
     this._inferIfGameIsOnFightScreen();
     if (this.isOnFightScreen) this._inferFightInfo();
+
+    this._inferIfGameIsOnLearnMoveScreen();
 }
 
 pokeplanet.prototype._isGameOnScreen = function (screenshot) {
@@ -53,15 +55,20 @@ pokeplanet.prototype._inferGameScreenBounds = function () {
 pokeplanet.prototype._inferGameScreenComponents = function () {
     if (!this.gameScreenBounds) throw new Exception('Cannot infer game screen components if game screen bounds are undefined');
 
-    this.bagButtonBounds = { x: this.gameScreenBounds.x + 705, y: this.gameScreenBounds.y + 842, width: 286, height: 90 };
+    // bag screen
     this.bagNextItemButtonBounds = { x: this.gameScreenBounds.x + 585, y: this.gameScreenBounds.y + 842, width: 54, height: 115 };
-    this.fightButtonBounds = { x: this.gameScreenBounds.x + 410, y: this.gameScreenBounds.y + 842, width: 286, height: 90 };
+    this.bagSelectedItemBounds = { x: this.gameScreenBounds.x + 660, y: this.gameScreenBounds.y + 842, width: 990, height: 60 };
     this.useItemButtonBounds = { x: this.gameScreenBounds.x + 412, y: this.gameScreenBounds.y + 968, width: 227, height: 60 };
 
-    this.bagSelectedItemBounds = { x: this.gameScreenBounds.x + 660, y: this.gameScreenBounds.y + 842, width: 990, height: 60 };
-
+    // fight screen
+    this.bagButtonBounds = { x: this.gameScreenBounds.x + 705, y: this.gameScreenBounds.y + 842, width: 286, height: 90 };
+    this.fightButtonBounds = { x: this.gameScreenBounds.x + 410, y: this.gameScreenBounds.y + 842, width: 286, height: 90 };
     this.fightEnemyBounds = { x: this.gameScreenBounds.x + 392, y: this.gameScreenBounds.y + 268, width: 338, height: 42 };
     this.fightEnemyLvlBounds = { x: this.gameScreenBounds.x + 730, y: this.gameScreenBounds.y + 268, width: 102, height: 42 };
+
+    // learn move screen
+    this.learnMoveWindowTitleBounds = { x: this.gameScreenBounds.x + 672, y: this.gameScreenBounds.y + 328, width: 538, height: 52 };
+    this.learnMoveWindowTitleCloseButtonBounds = { x: this.gameScreenBounds.x + 1216, y: this.gameScreenBounds.y + 332, width: 46, height: 46 };
 }
 
 pokeplanet.prototype._inferIfGameIsOnBagScreen = function () {
@@ -104,6 +111,14 @@ pokeplanet.prototype._inferFightInfo = function () {
         enemyLvl: enemyLvlOutput.substr(3),
         enemyWasCaptured: enemyWasCaptured
     };
+}
+
+pokeplanet.prototype._inferIfGameIsOnLearnMoveScreen = function () {
+    if (!this.gameScreenBounds) throw new Exception('Cannot infer if game is on learn move screen if game screen bounds are undefined');
+
+    let location = this.__subimageLocationOnImage(this.__saveScreenshotRegion(this.learnMoveWindowTitleBounds), path.join(__dirname, '/resources/learnMoveWindowTitle.png'), 0.4);
+    
+    this.isOnLearnMoveScreen = location !== false;
 }
 
 pokeplanet.prototype.__saveScreenshotRegion = function (bounds) {

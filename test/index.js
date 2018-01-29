@@ -43,6 +43,16 @@ describe('pokeplanet', function() {
             assert.equal(pokeplanet.isOnFightScreen, false);
         });
 
+        it('should return true when game is on learn move screen', function() {
+            pokeplanet.refreshStatus(Jimp.readSync(__dirname + '/resources/screenshot6.png'));
+            assert.equal(pokeplanet.isOnLearnMoveScreen, true);
+        });
+
+        it('should return false when game is not on learn move screen', function() {
+            pokeplanet.refreshStatus(Jimp.readSync(__dirname + '/resources/screenshot3.png'));
+            assert.equal(pokeplanet.isOnLearnMoveScreen, false);
+        });
+
     });
 
     describe('on bag tests', function () {
