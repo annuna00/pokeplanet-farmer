@@ -18,6 +18,7 @@ pokeplanet.prototype.gameIconLoc = false;
 pokeplanet.prototype.gameOnScreen = false;
 pokeplanet.prototype.isOnBagScreen = false;
 pokeplanet.prototype.isOnFightScreen = false;
+pokeplanet.prototype.isOnLearnMoveScreen = false;
 
 pokeplanet.prototype.refreshStatus = function (screenshot) {
     if (!this._isGameOnScreen(screenshot)) return;

@@ -91,6 +91,16 @@ while (1) {
                 robot.moveMouseSmooth(x - 300, y - 300);
             }
         }
+        else if (pokeplanet.isOnLearnMoveScreen) {
+            console.log('learn move screen'); 
+            
+            // we can close the learn move screen and keeps farming cause we can learn those moves in the Two Island
+            let x = pokeplanet.learnMoveWindowTitleCloseButtonBounds.x / screenshotScale + Math.floor(Math.random() * pokeplanet.learnMoveWindowTitleCloseButtonBounds.width / screenshotScale);
+            let y = pokeplanet.learnMoveWindowTitleCloseButtonBounds.y / screenshotScale + Math.floor(Math.random() * pokeplanet.learnMoveWindowTitleCloseButtonBounds.height / screenshotScale);
+            
+            robot.moveMouseSmooth(x, y);
+            robot.mouseClick('left', false);
+        }
         else if (pokeplanet.isOnBagScreen) {
             if (pokeballs.indexOf(pokeplanet.bagInfo.selectedItem) >= 0) {
                 console.log('try to capture using a ' + pokeplanet.bagInfo.selectedItem);
