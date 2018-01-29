@@ -21,7 +21,11 @@ let pokemonsToCatch = [
     'Dratini',
     'Dragonair',
     'Psyduck',
-    'Slowpoke'
+    'Slowpoke',
+    'Grimer',
+    'Koffing',
+    'Growlithe',
+    'Vulpix'
 ];
 
 while (1) {
