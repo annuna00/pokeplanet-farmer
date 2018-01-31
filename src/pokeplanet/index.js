@@ -8,7 +8,7 @@ const Jimp = require('jimp');
 
 Jimp.prototype.writeSync = deasync(Jimp.prototype.write);
 
-const SUBIMAGE_CMD = path.join(__dirname, '/lib/subimage');
+const SUBIMAGE_CMD = path.join(__dirname, '/lib/subimage/build/subimage');
 const TESSERACT_CMD = 'tesseract';
 
 function pokeplanet() {

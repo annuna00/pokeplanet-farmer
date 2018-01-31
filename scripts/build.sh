@@ -14,5 +14,14 @@ else
     cd ../../
 fi
 
+# subimage
+git submodule update --recursive
+cd src/pokeplanet/lib/subimage
+mkdir build
+cd build
+cmake ../
+make
+cd ../../../../../
+
 # tesseract
 sudo apt-get install tesseract-ocr
