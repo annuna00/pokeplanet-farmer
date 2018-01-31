@@ -1,7 +1,5 @@
 # opencv
 if [ ! -d "opencv" ]; then
-    sudo apt-get install cmake g++ gdb -y
-    sudo apt-get install libavcodec-dev libavformat-dev libgtk2.0-dev libswscale-dev pkg-config -y
     git clone https://github.com/opencv/opencv
     cd opencv
     mkdir release
