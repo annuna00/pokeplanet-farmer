@@ -18,3 +18,8 @@ before_script:
   - sudo apt-get update -q
   - sudo apt-get install tesseract-ocr
   - echo Tesseract OCR installed successfully
+
+cache:
+  directories:
+    - node_modules/
+    - opencv/
