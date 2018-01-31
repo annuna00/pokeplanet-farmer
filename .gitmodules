@@ -1,0 +1,3 @@
+[submodule "src/pokeplanet/lib/subimage"]
+	path = src/pokeplanet/lib/subimage
+	url = https://github.com/agurz/subimage.git
