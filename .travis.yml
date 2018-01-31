@@ -3,8 +3,10 @@ language: node_js
 node_js:
   - "6"
 
-before_script:
-  - if [ ! -d "opencv" ]; then
+before_install:
+  - sudo apt-get update -q
+
+install:
   - echo Installing OpenCV...
   - sudo apt-get install cmake g++ gdb -y
   - sudo apt-get install libavcodec-dev libavformat-dev libgtk2.0-dev libswscale-dev pkg-config -y
@@ -17,16 +19,8 @@ before_script:
   - sudo make install
   - cd ..
   - echo OpenCV installed successfully
-  - else
-  - echo OpenCV obtained from cache
-  - cd release
-  - sudo make install
-  - cd ..
-  - echo OpenCV installed successfully
-  - fi
   - 
   - echo Installing Tesseract OCR...
-  - sudo apt-get update -q
   - sudo apt-get install tesseract-ocr
   - echo Tesseract OCR installed successfully
 
