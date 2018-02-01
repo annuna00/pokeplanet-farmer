@@ -57,4 +57,6 @@ else
 fi
 sudo make install
 sudo ldconfig
+cd ../
+wget https://github.com/tesseract-ocr/tessdata/raw/master/eng.traineddata -P /usr/local/share/
 cd $dir
