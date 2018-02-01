@@ -6,7 +6,7 @@ dir=`pwd`
 # opencv
 #
 sudo apt-get install libavcodec-dev libavformat-dev libgtk2.0-dev libswscale-dev -y
-if [ ! -d "opencv" ]; then
+if [ ! -f "opencv/README.md" ]; then
     git clone https://github.com/opencv/opencv
     cd opencv
     mkdir release
@@ -33,8 +33,8 @@ make
 # tesseract
 #
 cd $dir
-sudo apt-get install autoconf-archive automake g++ libleptonica-dev libtool -y
-if [ ! -d "tesseract" ]; then git clone https://github.com/tesseract-ocr/tesseract.git; fi
+sudo apt-get install autoconf-archive automake libleptonica-dev libtool -y
+if [ ! -f "tesseract/README.md" ]; then git clone https://github.com/tesseract-ocr/tesseract; fi
 cd tesseract
 ./autogen.sh
 ./configure
