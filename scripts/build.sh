@@ -17,23 +17,30 @@ else
     cd opencv/release
 fi
 sudo make install
+cd $dir
 
 #
 # subimage
 #
-cd $dir
 git submodule update --recursive
 cd src/pokeplanet/lib/subimage
 mkdir build
 cd build
 cmake ../
 make
+cd $dir
 
 #
 # tesseract
 #
+sudo apt-get install autoconf-archive automake libtool -y
+if [ ! -f "leptonica/README.md" ]; then git clone https://github.com/DanBloomberg/leptonica.git; fi
+cd leptonica
+mkdir build
+cd build
+cmake ../
+cmake --build .
 cd $dir
-sudo apt-get install autoconf-archive automake libleptonica-dev libtool -y
 if [ ! -f "tesseract/README.md" ]; then git clone https://github.com/tesseract-ocr/tesseract; fi
 cd tesseract
 ./autogen.sh
@@ -41,4 +48,4 @@ cd tesseract
 make
 sudo make install
 sudo ldconfig
-cd ../
+cd $dir

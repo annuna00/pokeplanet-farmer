@@ -12,6 +12,7 @@ before_script:
 
 cache:
   directories:
+    - leptonica/
     - node_modules/
     - opencv/
     - tesseract/
