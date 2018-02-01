@@ -34,19 +34,27 @@ cd $dir
 # tesseract
 #
 sudo apt-get install autoconf-archive automake libtool -y
-if [ ! -f "leptonica/README.md" ]; then git clone https://github.com/DanBloomberg/leptonica.git; fi
-cd leptonica
-./autobuild
-./configure
-./make-for-auto
-sudo make
+if [ ! -f "leptonica/README.md" ]; then 
+    git clone https://github.com/DanBloomberg/leptonica.git;
+    cd leptonica
+    ./autobuild
+    ./configure
+    ./make-for-auto
+    make
+else
+    cd leptonica
+fi
 sudo make install
 cd $dir
-if [ ! -f "tesseract/README.md" ]; then git clone https://github.com/tesseract-ocr/tesseract; fi
-cd tesseract
-./autogen.sh
-./configure
-make
+if [ ! -f "tesseract/README.md" ]; then 
+    git clone https://github.com/tesseract-ocr/tesseract; 
+    cd tesseract
+    ./autogen.sh
+    ./configure
+    make
+else
+    cd tesseract
+fi
 sudo make install
 sudo ldconfig
 cd $dir
