@@ -36,10 +36,11 @@ cd $dir
 sudo apt-get install autoconf-archive automake libtool -y
 if [ ! -f "leptonica/README.md" ]; then git clone https://github.com/DanBloomberg/leptonica.git; fi
 cd leptonica
-mkdir build
-cd build
-cmake ../
-cmake --build .
+./autobuild
+./configure
+./make-for-auto
+sudo make
+sudo make install
 cd $dir
 if [ ! -f "tesseract/README.md" ]; then git clone https://github.com/tesseract-ocr/tesseract; fi
 cd tesseract
