@@ -146,7 +146,7 @@ pokeplanet.prototype.__subimageLocationOnScreenshot = function (imageFilePath, t
 }
 
 pokeplanet.prototype.__ocr = function (filePath, psm) {
-    let output = execSync(`${TESSERACT_CMD} ${filePath} stdout --psm ${psm || 13}`, { stdio: 'pipe' }).toString().trim().replace(new RegExp(' ', 'g'), '');
+    let output = execSync(`${TESSERACT_CMD} ${filePath} stdout`, { stdio: 'pipe' }).toString().trim().replace(new RegExp(' ', 'g'), '');
     console.log(output);
     return output;
 }
