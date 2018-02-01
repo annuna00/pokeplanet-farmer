@@ -57,6 +57,5 @@ else
 fi
 sudo make install
 sudo ldconfig
-wget https://github.com/tesseract-ocr/tessdata/raw/master/eng.traineddata -P $dir/tesseract/tessdata
 cd $dir
-export TESSDATA_PREFIX=$dir/tesseract/tessdata
+wget https://github.com/tesseract-ocr/tessdata/raw/master/eng.traineddata
