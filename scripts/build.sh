@@ -58,4 +58,4 @@ fi
 sudo make install
 sudo ldconfig
 cd $dir
-wget https://github.com/tesseract-ocr/tessdata/raw/master/eng.traineddata
+sudo wget https://github.com/tesseract-ocr/tessdata/raw/master/eng.traineddata -P /usr/local/share
