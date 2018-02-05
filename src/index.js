@@ -3,10 +3,6 @@ const robot = require('robotjs');
 const sleep = require('sleep');
 const Jimp = require('jimp');
 
-let changeMovementDirection = true;
-let direction = 'right';
-let loop = 0;
-
 let pokeballs = ['PokeBall', 'GreatBall', 'UltraBall'];
 let pokemonsToCatch = [
     'Parasect',
@@ -25,7 +21,9 @@ let pokemonsToCatch = [
     'Grimer',
     'Koffing',
     'Growlithe',
-    'Vulpix'
+    'Vulpix',
+    'Sudowoodo',
+    'Pikachu'
 ];
 
 while (1) {
@@ -130,21 +128,21 @@ while (1) {
             }
         }
         else {
-            robot.keyToggle('w', 'up');
-            robot.keyToggle('a', 'down');
-            sleep.msleep(250);
-            robot.keyToggle('a', 'up');
-            robot.keyToggle('s', 'down');
-            sleep.msleep(250);
-            robot.keyToggle('s', 'up');
-            robot.keyToggle('d', 'down');
-            sleep.msleep(250);
-            robot.keyToggle('d', 'up');
-            robot.keyToggle('w', 'down');
-            sleep.msleep(250);
+            for (var j = 0; j < 3; j++) {
+                robot.keyToggle('w', 'up');
+                robot.keyToggle('a', 'down');
+                sleep.msleep(250);
+                robot.keyToggle('a', 'up');
+                robot.keyToggle('s', 'down');
+                sleep.msleep(250);
+                robot.keyToggle('s', 'up');
+                robot.keyToggle('d', 'down');
+                sleep.msleep(250);
+                robot.keyToggle('d', 'up');
+                robot.keyToggle('w', 'down');
+                sleep.msleep(250);
+            }
         }
     }
-
-    loop++;
  
 }
