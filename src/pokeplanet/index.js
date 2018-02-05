@@ -61,7 +61,7 @@ pokeplanet.prototype._inferIfGameLostConnection = function () {
 pokeplanet.prototype._inferGameScreenBounds = function () {
     if (!this.gameIconLoc) throw new Exception('Cannot infer game screen bounds if game icon location is undefined');
 
-    this.gameScreenBounds = { x: this.gameIconLoc[0] - 76, y: this.gameIconLoc[1] - 1208, width: 2048, height: 1280 };
+    this.gameScreenBounds = { x: this.gameIconLoc[0] - 84, y: this.gameIconLoc[1] - 1218, width: 2048, height: 1280 };
 }
 
 pokeplanet.prototype._inferGameScreenComponents = function () {
@@ -87,7 +87,7 @@ pokeplanet.prototype._inferIfGameIsOnBagScreen = function () {
     if (!this.gameScreenBounds) throw new Exception('Cannot infer if game is on bag screen if game screen bounds are undefined');
     
     this.useItemButtonLocation = this.__subimageLocationOnImage(this.__saveScreenshotRegion(this.useItemButtonBounds), path.join(__dirname, '/resources/useItemButton.png'), 0.4);
-    
+
     this.isOnBagScreen = this.useItemButtonLocation !== false;
 }
 
@@ -158,7 +158,7 @@ pokeplanet.prototype.__subimageLocationOnScreenshot = function (imageFilePath, t
 
 pokeplanet.prototype.__ocr = function (filePath, psm) {
     let psmArg = this.tesseractVersion[0] < 4 ? `--psm ${psm || 13}` : '';
-    return execSync(`${TESSERACT_CMD} ${filePath} stdout ${psmArg}`, { stdio: 'pipe' }).toString().trim().replace(/[^0-9a-z\[\]-]/gi, '');
+    return execSync(`${TESSERACT_CMD} ${filePath} stdout ${psmArg}`, { stdio: 'pipe' }).toString().trim().replace(/[^0-9a-z\[\]\(\)-]/gi, '');
 }
 
 module.exports = new pokeplanet();
