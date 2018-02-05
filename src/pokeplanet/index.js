@@ -16,13 +16,17 @@ function pokeplanet() {
 }
 
 pokeplanet.prototype.gameIconLoc = false;
+pokeplanet.prototype.gameLostConnection = false;
 pokeplanet.prototype.gameOnScreen = false;
 pokeplanet.prototype.isOnBagScreen = false;
 pokeplanet.prototype.isOnFightScreen = false;
 pokeplanet.prototype.isOnLearnMoveScreen = false;
 
 pokeplanet.prototype.refreshStatus = function (screenshot) {
-    if (!this._isGameOnScreen(screenshot)) return;
+    if (!this._isGameOnScreen(screenshot)) {
+        this._inferIfGameLostConnection();
+        return;
+    }
 
     this._inferGameScreenBounds();
     this._inferGameScreenComponents();
@@ -42,10 +46,16 @@ pokeplanet.prototype._isGameOnScreen = function (screenshot) {
     
     this.screenshot.writeSync(this.screenshotFilePath);
 
-    this.gameIconLoc = this.__subimageLocationOnScreenshot(path.join(__dirname, '/resources/icon.png'), 0.4);
+    this.gameIconLoc = this.__subimageLocationOnScreenshot(path.join(__dirname, '/resources/icon.png'), 0.5);
     this.gameOnScreen = this.gameIconLoc !== false;
     
     return this.gameOnScreen;
+}
+
+pokeplanet.prototype._inferIfGameLostConnection = function () {
+    let location = this.__subimageLocationOnScreenshot(path.join(__dirname, '/resources/connectionLostLabel.png'));
+    
+    this.gameLostConnection = location !== false;
 }
 
 pokeplanet.prototype._inferGameScreenBounds = function () {

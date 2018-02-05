@@ -53,6 +53,12 @@ describe('pokeplanet', function() {
             assert.equal(pokeplanet.isOnLearnMoveScreen, false);
         });
 
+        it('should return true if game is on the screen but without connection', function() {
+            pokeplanet.refreshStatus(Jimp.readSync(__dirname + '/resources/screenshot7.png'));
+            assert.equal(pokeplanet.gameOnScreen, false);
+            assert.equal(pokeplanet.gameLostConnection, true);
+        });
+
     });
 
     describe('on bag tests', function () {
