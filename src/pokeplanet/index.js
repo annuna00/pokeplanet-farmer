@@ -12,6 +12,7 @@ const SUBIMAGE_CMD = path.join(__dirname, '/lib/subimage/build/subimage');
 const TESSERACT_CMD = 'tesseract';
 
 function pokeplanet() {
+    this.tesseractVersion = execSync('tesseract --version').toString().split(os.EOL).shift().split(' ').pop().trim().split('.');
 }
 
 pokeplanet.prototype.gameIconLoc = false;
@@ -146,9 +147,8 @@ pokeplanet.prototype.__subimageLocationOnScreenshot = function (imageFilePath, t
 }
 
 pokeplanet.prototype.__ocr = function (filePath, psm) {
-    let output = execSync(`${TESSERACT_CMD} ${filePath} stdout`, { stdio: 'pipe' }).toString().trim().replace(new RegExp(' ', 'g'), '');
-    console.log(output);
-    return output;
+    let psmArg = this.tesseractVersion[0] < 4 ? `--psm ${psm || 13}` : '';
+    return execSync(`${TESSERACT_CMD} ${filePath} stdout ${psmArg}`, { stdio: 'pipe' }).toString().trim().replace(new RegExp(' ', 'g'), '');
 }
 
 module.exports = new pokeplanet();
