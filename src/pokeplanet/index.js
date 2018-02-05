@@ -120,7 +120,7 @@ pokeplanet.prototype._inferFightInfo = function () {
     this.fightInfo = {
         enemy: enemyOutput.replace('[S]', ''),
         enemyIsShiny: enemyOutput.indexOf('[S]') >= 0,
-        enemyLvl: enemyLvlOutput.substr(3),
+        enemyLvl: enemyLvlOutput.replace('Lv', ''),
         enemyWasCaptured: enemyWasCaptured
     };
 }
@@ -158,7 +158,7 @@ pokeplanet.prototype.__subimageLocationOnScreenshot = function (imageFilePath, t
 
 pokeplanet.prototype.__ocr = function (filePath, psm) {
     let psmArg = this.tesseractVersion[0] < 4 ? `--psm ${psm || 13}` : '';
-    return execSync(`${TESSERACT_CMD} ${filePath} stdout ${psmArg}`, { stdio: 'pipe' }).toString().trim().replace(new RegExp(' ', 'g'), '');
+    return execSync(`${TESSERACT_CMD} ${filePath} stdout ${psmArg}`, { stdio: 'pipe' }).toString().trim().replace(/[^0-9a-z\[\]-]/gi, '');
 }
 
 module.exports = new pokeplanet();
