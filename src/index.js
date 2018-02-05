@@ -126,25 +126,18 @@ while (1) {
             }
         }
         else {
-            if (changeMovementDirection) {
-                changeMovementDirection = false;
-                if (direction == 'left') {
-                    console.log('going right');
-                    direction = 'right';
-                    robot.keyToggle('a', 'up');
-                    robot.keyToggle('d', 'down');
-                }
-                else if (direction == 'right') {
-                    console.log('going left');
-                    direction = 'left';
-                    robot.keyToggle('a', 'down');
-                    robot.keyToggle('d', 'up');
-                }
-            }
-
-            if (loop % 2 == 0) {
-                changeMovementDirection = true;
-            }
+            robot.keyToggle('w', 'up');
+            robot.keyToggle('a', 'down');
+            sleep.msleep(250);
+            robot.keyToggle('a', 'up');
+            robot.keyToggle('s', 'down');
+            sleep.msleep(250);
+            robot.keyToggle('s', 'up');
+            robot.keyToggle('d', 'down');
+            sleep.msleep(250);
+            robot.keyToggle('d', 'up');
+            robot.keyToggle('w', 'down');
+            sleep.msleep(250);
         }
     }
 
