@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
+    "pkg": "sh scripts/pkg.sh",
     "start": "node src/index.js",
     "test": "node_modules/.bin/mocha test/index.js"
   },
