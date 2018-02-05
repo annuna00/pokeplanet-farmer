@@ -51,6 +51,10 @@ while (1) {
         robot.keyToggle('s', 'up');
         robot.keyToggle('d', 'up');
         robot.keyToggle('w', 'up');
+
+        if (pokeplanet.gameLostConnection) {
+            robot.keyTap('R', 'command');
+        }
     }
     else {
         if (pokeplanet.isOnFightScreen) {
