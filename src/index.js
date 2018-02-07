@@ -145,18 +145,18 @@ while (1) {
         }
         else {
             for (var j = 0; j < 3; j++) {
-                robot.keyToggle('w', 'up');
+                //robot.keyToggle('w', 'up');
                 robot.keyToggle('a', 'down');
                 sleep.msleep(250);
                 robot.keyToggle('a', 'up');
-                robot.keyToggle('s', 'down');
-                sleep.msleep(250);
-                robot.keyToggle('s', 'up');
+                //robot.keyToggle('s', 'down');
+                //sleep.msleep(250);
+                //robot.keyToggle('s', 'up');
                 robot.keyToggle('d', 'down');
                 sleep.msleep(250);
                 robot.keyToggle('d', 'up');
-                robot.keyToggle('w', 'down');
-                sleep.msleep(250);
+                //robot.keyToggle('w', 'down');
+                //sleep.msleep(250);
             }
         }
     }
