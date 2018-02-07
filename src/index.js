@@ -23,9 +23,13 @@ let pokemonsToCatch = [
     'Growlithe',
     'Vulpix',
     'Sudowoodo',
-    'Pikachu'
+    'Pikachu',
+    'Snorlax'
 ];
 
+let excludedPokemons = [
+    'Raticate'
+];
 
 process.on('SIGINT', () => {
     robot.keyToggle('a', 'up');
@@ -77,7 +81,10 @@ while (1) {
             robot.keyToggle('d', 'up');
             robot.keyToggle('w', 'up');
 
-            if (!pokeplanet.fightInfo.enemyWasCaptured || pokeplanet.fightInfo.enemyIsShiny || pokemonsToCatch.indexOf(pokeplanet.fightInfo.enemy) >= 0) {
+            let enemyIsExcluded = excludedPokemons.indexOf(pokeplanet.fightInfo.enemy) >= 0;
+            let enemyShouldBeCatched = !pokeplanet.fightInfo.enemyWasCaptured || pokeplanet.fightInfo.enemyIsShiny || pokemonsToCatch.indexOf(pokeplanet.fightInfo.enemy) >= 0;
+
+            if (!enemyIsExcluded && enemyShouldBeCatched) {
                 console.log('let\'s try to capture this pokemon... we need to open the bag :P');
                 
                 let x = pokeplanet.bagButtonBounds.x / screenshotScale + Math.floor(Math.random() * pokeplanet.bagButtonBounds.width / screenshotScale);
