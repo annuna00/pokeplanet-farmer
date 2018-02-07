@@ -26,6 +26,15 @@ let pokemonsToCatch = [
     'Pikachu'
 ];
 
+
+process.on('SIGINT', () => {
+    robot.keyToggle('a', 'up');
+    robot.keyToggle('s', 'up');
+    robot.keyToggle('d', 'up');
+    robot.keyToggle('w', 'up');
+    process.exit();
+});
+
 while (1) {
 
     let capture = robot.screen.capture();
