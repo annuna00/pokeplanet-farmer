@@ -1,35 +1,12 @@
+const fs = require('fs');
 const pokeplanet = require('./pokeplanet');
 const robot = require('robotjs');
 const sleep = require('sleep');
 const Jimp = require('jimp');
 
-let pokeballs = ['PokeBall', 'GreatBall', 'UltraBall'];
-let pokemonsToCatch = [
-    'Parasect',
-    'Exeggcute',
-    'Chansey',
-    'Tauros',
-    'Doduo',
-    'Rhyhorn',
-    'Scyther',
-    'Pinsir',
-    'Kangaskhan',
-    'Dratini',
-    'Dragonair',
-    'Psyduck',
-    'Slowpoke',
-    'Grimer',
-    'Koffing',
-    'Growlithe',
-    'Vulpix',
-    'Sudowoodo',
-    'Pikachu',
-    'Snorlax'
-];
+const pokeballs = ['PokeBall', 'GreatBall', 'UltraBall'];
 
-let excludedPokemons = [
-    'Raticate'
-];
+const config = JSON.parse(fs.readFileSync(__dirname + '/config.json').toString());
 
 process.on('SIGINT', () => {
     robot.keyToggle('a', 'up');
@@ -81,10 +58,10 @@ while (1) {
             robot.keyToggle('d', 'up');
             robot.keyToggle('w', 'up');
 
-            let enemyIsExcluded = excludedPokemons.indexOf(pokeplanet.fightInfo.enemy) >= 0;
-            let enemyShouldBeCatched = !pokeplanet.fightInfo.enemyWasCaptured || pokeplanet.fightInfo.enemyIsShiny || pokemonsToCatch.indexOf(pokeplanet.fightInfo.enemy) >= 0;
-
-            if (!enemyIsExcluded && enemyShouldBeCatched) {
+            let enemyShouldBeCatched = !pokeplanet.fightInfo.enemyWasCaptured || pokeplanet.fightInfo.enemyIsShiny || config.alwaysCatch.indexOf(pokeplanet.fightInfo.enemy) >= 0;
+            let enemyShouldBeKilled = config.alwaysKill.indexOf(pokeplanet.fightInfo.enemy) >= 0;
+            
+            if (!enemyShouldBeKilled && enemyShouldBeCatched) {
                 console.log('let\'s try to capture this pokemon... we need to open the bag :P');
                 
                 let x = pokeplanet.bagButtonBounds.x / screenshotScale + Math.floor(Math.random() * pokeplanet.bagButtonBounds.width / screenshotScale);

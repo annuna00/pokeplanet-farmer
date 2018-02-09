@@ -1,0 +1,27 @@
+{
+    "catchAlways": [
+        "Parasect",
+        "Exeggcute",
+        "Chansey",
+        "Tauros",
+        "Doduo",
+        "Rhyhorn",
+        "Scyther",
+        "Pinsir",
+        "Kangaskhan",
+        "Dratini",
+        "Dragonair",
+        "Psyduck",
+        "Slowpoke",
+        "Grimer",
+        "Koffing",
+        "Growlithe",
+        "Vulpix",
+        "Sudowoodo",
+        "Pikachu",
+        "Snorlax"
+    ],
+    "killAlways": [
+        "Raticate"
+    ]
+}
