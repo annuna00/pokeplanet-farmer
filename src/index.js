@@ -40,7 +40,9 @@ while (1) {
         robot.keyToggle('d', 'up');
         robot.keyToggle('w', 'up');
 
-        if (pokeplanet.gameLostConnection) {
+        if (pokeplanet.gameLostConnection && pokeplanet.refreshButtonLocation) {
+            robot.moveMouseSmooth(pokeplanet.refreshButtonLocation[0] / screenshotScale + 6, pokeplanet.refreshButtonLocation[1] / screenshotScale + 6);
+            robot.mouseClick('left', false);
             robot.keyTap('R', 'command');
         }
     }
@@ -121,6 +123,9 @@ while (1) {
             }
         }
         else {
+            robot.moveMouseSmooth(pokeplanet.gameScreenBounds.x / screenshotScale + 6, pokeplanet.gameScreenBounds.y / screenshotScale + 200);
+            robot.mouseClick('left', false);
+
             for (var j = 0; j < 3; j++) {
                 //robot.keyToggle('w', 'up');
                 robot.keyToggle('a', 'down');

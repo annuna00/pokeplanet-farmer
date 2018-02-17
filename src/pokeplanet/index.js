@@ -56,6 +56,7 @@ pokeplanet.prototype._inferIfGameLostConnection = function () {
     let location = this.__subimageLocationOnScreenshot(path.join(__dirname, '/resources/connectionLostLabel.png'));
     
     this.gameLostConnection = location !== false;
+    this.refreshButtonLocation = this.__subimageLocationOnScreenshot(path.join(__dirname, '/resources/refreshButton.png'));
 }
 
 pokeplanet.prototype._inferGameScreenBounds = function () {
