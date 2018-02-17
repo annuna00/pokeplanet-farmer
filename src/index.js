@@ -58,8 +58,8 @@ while (1) {
             robot.keyToggle('d', 'up');
             robot.keyToggle('w', 'up');
 
-            let enemyShouldBeCatched = !pokeplanet.fightInfo.enemyWasCaptured || pokeplanet.fightInfo.enemyIsShiny || config.alwaysCatch.indexOf(pokeplanet.fightInfo.enemy) >= 0;
-            let enemyShouldBeKilled = config.alwaysKill.indexOf(pokeplanet.fightInfo.enemy) >= 0;
+            let enemyShouldBeCatched = !pokeplanet.fightInfo.enemyWasCaptured || pokeplanet.fightInfo.enemyIsShiny || config.catchAlways.indexOf(pokeplanet.fightInfo.enemy) >= 0;
+            let enemyShouldBeKilled = config.killAlways.indexOf(pokeplanet.fightInfo.enemy) >= 0;
             
             if (!enemyShouldBeKilled && enemyShouldBeCatched) {
                 console.log('let\'s try to capture this pokemon... we need to open the bag :P');
