@@ -1,6 +1,6 @@
 # pokeplanet-farmer  [![Build Status](https://travis-ci.org/annuna01/pokeplanet-farmer.svg?branch=master)](https://travis-ci.org/annuna01/pokeplanet-farmer)
 
-![ezgif.com-video-to-gif.gif](https://s17.postimg.org/ebp43tc5r/ezgif.com-video-to-gif.gif)
+<img alt="gameplay" src="https://s1.gifyu.com/images/ezgif.com-video-to-gif7472bfa19d9d6a9f.md.gif" width="100%" />
 
 ## Why do it exists?
 
