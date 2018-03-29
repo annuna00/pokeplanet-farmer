@@ -1,6 +1,6 @@
 # pokeplanet-farmer  [![Build Status](https://travis-ci.org/annuna01/pokeplanet-farmer.svg?branch=master)](https://travis-ci.org/annuna01/pokeplanet-farmer)
 
-![](https://lh6.googleusercontent.com/Rh13eyFZqjvHyPTpyr52v06NbVv6zAAdub3N887L4Qd-OePk7dmd164PogDZvb1UHeiB70Qz6P891SbbE1i_=w2880-h1526)
+[![ezgif.com-video-to-gif.gif](https://s17.postimg.org/ebp43tc5r/ezgif.com-video-to-gif.gif)](https://postimg.org/image/53wvn453f/)
 
 ## Why do it exists?
 
@@ -9,8 +9,8 @@ I strongly believe that repetitive and boring processes should be done by machin
 ## What it does?
 
 - It walk in circles until a pokemon appears
-- If the pokemon was already caught then it will be killed (except for those in [catchAlways config](#Config))
-- If the pokemon wasn't caught it will start throwing pokeballs until the pokemon is caught (except for those in [killAlways config](#Config))
+- If the pokemon was already caught then it will be killed (except for those in [catchAlways config](#config))
+- If the pokemon wasn't caught it will start throwing pokeballs until the pokemon is caught (except for those in [killAlways config](#config))
 - If after the battle your pokemon is trying to learn a new movement, it will be discarted
 
 ## How to use it?
