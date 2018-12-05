@@ -1,6 +1,6 @@
-# pokeplanet-farmer  [![Build Status](https://travis-ci.org/annuna01/pokeplanet-farmer.svg?branch=master)](https://travis-ci.org/annuna01/pokeplanet-farmer)
+# pokeplanet-farmer  [![Build Status](https://travis-ci.org/annuna01/pokeplanet-farmer.svg?branch=master)](https://travis-ci.org/annuna00/pokeplanet-farmer)
 
-<img alt="gameplay" src="https://github.com/annuna01/pokeplanet-farmer/blob/master/docs/readme.gif" width="100%" />
+<img alt="gameplay" src="https://github.com/annuna00/pokeplanet-farmer/blob/master/docs/readme.gif" width="100%" />
 
 ## Why do it exists?
 
